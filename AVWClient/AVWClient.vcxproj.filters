@@ -28,6 +28,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{ba5a04fd-b622-47bc-98cd-81cdb8b1d89e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{473ad1e3-5f15-4e7e-8ff7-06f2a597fc53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AVWClient.cpp">
@@ -54,6 +57,9 @@
     <ClCompile Include="test_boost.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">
@@ -64,6 +70,15 @@
     </ClInclude>
     <ClInclude Include="CommonDefine.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="internal.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsBase.hpp">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

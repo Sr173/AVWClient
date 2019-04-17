@@ -246,7 +246,6 @@ int main1(int, char**)
 int main(int, char**)
 #endif
 {
-	aaa();
 	case1();
 	case2();
 	case3();
