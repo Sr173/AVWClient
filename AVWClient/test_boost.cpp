@@ -1,161 +1,170 @@
-﻿#include <tuple>
-#include <utility>
-
-#include <boost/signals2.hpp>
-
-
-// Convenience wrapper for boost::signals2::signal.
-template<typename Signature> class Observer {
-public:
-	Observer(const Observer&) = delete;
-	Observer& operator=(const Observer&) = delete;
-	Observer() = default;
-
-private:
-	template<typename Observers> friend class Observable;
-
-	using Signal = boost::signals2::signal<Signature>;
-	using SignalResult = typename Signal::result_type;
-
-	Signal signal_;
-};
-
-
-// Generic observable mixin - users must derive from it.
-template<typename Observers> class Observable {
-private:
-	using ObserverTable = typename Observers::ObserverTable;
-
-public:
-	// Registers an observer.
-	template<size_t ObserverId, typename F>
-	boost::signals2::connection
-		Register(F&& f) {
-		return std::get<ObserverId>(signals_).signal_.connect(std::forward<F>(f));
-	}
-
-protected:
-	Observable() = default;
-
-	// Notifies observers.
-	template<size_t ObserverId, typename... Args>
-	typename std::tuple_element<ObserverId, ObserverTable>::type::SignalResult
-		Notify(Args&& ... args) const {
-		return std::get<ObserverId>(signals_).signal_(std::forward<Args>(args)...);
-	}
-
-private:
-	ObserverTable signals_;
-};
-
-
-//-----------------------------------------------------------------------------
-// Example usage.
-//-----------------------------------------------------------------------------
-
+﻿#include <boost/beast/core.hpp>
+#include <boost/beast/websocket.hpp>
+#include <boost/asio/connect.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <cstdlib>
+#include <functional>
 #include <iostream>
+#include <memory>
+#include <string>
 
+using tcp = boost::asio::ip::tcp;               // from <boost/asio/ip/tcp.hpp>
+namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.hpp>
 
-// Defines observers for Windows class.
-struct WindowObservers {
-	enum { ShowEvent, CloseEvent ,InitEvent};
-	using ObserverTable = std::tuple<
-		Observer<void()>,                 // ShowEvent
-		Observer<bool(bool force_close)>,  // CloseEvent
-		Observer<void()>
-	>;
-};
+//------------------------------------------------------------------------------
 
+// Report a failure
+void
+fail(boost::system::error_code ec, char const* what)
+{
+	std::cerr << what << ": " << ec.message() << "\n";
+}
 
-// Window: our Observable.
-class Window : public Observable<WindowObservers> {
+// Sends a WebSocket message and prints the response
+class session : public std::enable_shared_from_this<session>
+{
+	tcp::resolver resolver_;
+	websocket::stream<tcp::socket> ws_;
+	boost::beast::multi_buffer buffer_;
+	std::string host_;
+	std::string text_;
+
 public:
-	void Show() {
-		std::cout << "Window::Show called." << std::endl;
-		Notify<WindowObservers::ShowEvent>();
-		std::cout << "Window::Show handled." << std::endl << std::endl;
+	// Resolver and socket require an io_context
+	explicit
+		session(boost::asio::io_context& ioc)
+		: resolver_(ioc)
+		, ws_(ioc)
+	{
 	}
 
-	bool Close(bool force_close = false) {
-		std::cout << "Window::Close called: force_close == "
-			<< std::boolalpha << force_close << "." << std::endl;
+	// Start the asynchronous operation
+	void
+		run(
+			char const* host,
+			char const* port,
+			char const* text)
+	{
+		// Save these for later
+		host_ = host;
+		text_ = text;
 
-		const boost::optional<bool> can_close{
-		  Notify<WindowObservers::CloseEvent>(force_close) };
-		std::cout << "Window::Close handled. can_close == "
-			<< std::boolalpha << (!can_close || *can_close) << "."
-			<< std::endl << std::endl;
+		// Look up the domain name
+		resolver_.async_resolve(
+			host,
+			port,
+			std::bind(
+				&session::on_resolve,
+				shared_from_this(),
+				std::placeholders::_1,
+				std::placeholders::_2));
+	}
 
-		const bool closing{ force_close || !can_close || *can_close };
-		if (closing) {
-			// Actually close the window.
-			// ...  
+	void
+		on_resolve(
+			boost::system::error_code ec,
+			tcp::resolver::results_type results)
+	{
+		if (ec)
+			return fail(ec, "resolve");
+
+		// Make the connection on the IP address we get from a lookup
+		boost::asio::async_connect(
+			ws_.next_layer(),
+			results.begin(),
+			results.end(),
+			std::bind(
+				&session::on_connect,
+				shared_from_this(),
+				std::placeholders::_1));
+	}
+
+	void
+		on_connect(boost::system::error_code ec)
+	{
+		if (ec)
+			return fail(ec, "connect");
+
+		// Perform the websocket handshake
+		ws_.async_handshake(host_, "/",
+			std::bind(
+				&session::on_handshake,
+				shared_from_this(),
+				std::placeholders::_1));
+	}
+
+	void
+		on_handshake(boost::system::error_code ec)
+	{
+		if (ec)
+			return fail(ec, "handshake");
+
+		// Send the message
+		ws_.async_write(
+			boost::asio::buffer(text_),
+			std::bind(
+				&session::on_write,
+				shared_from_this(),
+				std::placeholders::_1,
+				std::placeholders::_2));
+	}
+
+	void
+		on_write(
+			boost::system::error_code ec,
+			std::size_t bytes_transferred)
+	{
+		boost::ignore_unused(bytes_transferred);
+
+		if (ec)
+			return fail(ec, "write");
+
+		// Read a message into our buffer
+		ws_.async_read(
+			buffer_,
+			std::bind(
+				&session::on_close,
+				shared_from_this(),
+				std::placeholders::_1,
+				std::placeholders::_2));
+	}
+
+
+
+	void
+		on_close(boost::system::error_code ec,
+			std::size_t bytes_transferred)
+	{
+		if (ec)
+			return fail(ec, "close");
+
+		// If we get here then the connection is closed gracefully
+
+		// The buffers() function helps print a ConstBufferSequence
+		for (auto i : buffer_.data()) {
+			std::cout << std::string((char*)i.data(), i.size()) << std::endl;
 		}
-		return closing;
-	}
-	void Init() {
-		Notify<WindowObservers::InitEvent>();
 	}
 };
 
-// Application: our Observer.
-class Application {
-public:
-	explicit Application(Window& window) : window_(window) {
-		// Register window observers.
-		window_.Register<WindowObservers::ShowEvent>([this]() {
-			OnWindowShow();
-			});
-		window.Register<WindowObservers::CloseEvent>([this](bool force_close) {
-			return OnWindowClose(force_close);
-			});
-		window.Register<WindowObservers::InitEvent>([this]() {
-			return OnWindowInit();
-			});
+//------------------------------------------------------------------------------
+
+int main(int argc, char** argv)
+{
+	auto const host = "127.0.0.1";
+	auto const port = "8080";
+	auto const text = "hello world";
+
+	// The io_context is required for all I/O
+	boost::asio::io_context ioc;
+
+	// Launch the asynchronous operation
+	std::make_shared<session>(ioc)->run(host, port, text);
+
+	// Run the I/O service. The call will return when
+	// the get operation is complete.
+	while (ioc.run_one()) {
+
 	}
-
-private:
-	void OnWindowShow() {
-		std::cout << "Application::OnWindowShow called." << std::endl;
-	}
-
-	bool OnWindowClose(bool force_close) {
-		std::cout << "Application::WindowClose called: force_close == "
-			<< std::boolalpha << force_close << "." << std::endl;
-		return force_close;
-	}
-
-	void OnWindowInit() {
-		std::cout << "Init" << std::endl;
-	}
-
-	Window& window_;
-};
-
-#include "iostream"
-
-void foo(int&& i) {
-	i++;
-}
-
-void case11(int&& i) {
-	foo(std::forward<int>(i));
-}
-
-void case12(int& i) {
-	foo(std::forward<int>(i));
-}
-
-int main() {
-	int i = 1;
-	int& j = i;
-
-	case11(std::forward<int>(i));
-	std::cout << i << std::endl;
-	case11(std::forward<int>(j));
-	std::cout << i << std::endl;
-	case12(std::forward<int&>(i));
-	std::cout << i << std::endl;
-	case12(std::forward<int&>(j));
-	std::cout << i << std::endl;
+	return EXIT_SUCCESS;
 }

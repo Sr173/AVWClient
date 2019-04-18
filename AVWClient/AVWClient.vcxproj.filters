@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -27,6 +23,19 @@
     </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{ba5a04fd-b622-47bc-98cd-81cdb8b1d89e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{d6289278-76c7-4adb-8b27-b6ffa5645878}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\WindowBase">
+      <UniqueIdentifier>{df788640-a1bb-40dd-9901-eaaa8ed94df9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\MainWindow">
+      <UniqueIdentifier>{0391fbda-1c50-45ca-be7e-4921e8e2cf51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,10 +63,22 @@
     <ClCompile Include="test_boost.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="ImplWindow.cpp">
+      <Filter>ImGuiImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsBase.cpp">
+      <Filter>Window\WindowBase</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Window\MainWindow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">
-      <Filter>头文件</Filter>
+      <Filter>Application</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.hpp">
       <Filter>Design Pattern</Filter>
@@ -67,6 +88,18 @@
     </ClInclude>
     <ClInclude Include="Observer.hpp">
       <Filter>Design Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.hpp">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="ImplWindow.hpp">
+      <Filter>ImGuiImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsBase.hpp">
+      <Filter>Window\WindowBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.hpp">
+      <Filter>Window\MainWindow</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

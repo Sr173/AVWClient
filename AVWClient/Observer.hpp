@@ -1,4 +1,5 @@
-﻿#include <boost/signals2.hpp>
+﻿#pragma once
+#include <boost/signals2.hpp>
 #include <tuple>
 #include <utility>
 
