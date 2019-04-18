@@ -1,261 +1,161 @@
-﻿#include "CommonDefine.h"
+﻿#include <tuple>
+#include <utility>
+
+#include <boost/signals2.hpp>
+
+
+// Convenience wrapper for boost::signals2::signal.
+template<typename Signature> class Observer {
+public:
+	Observer(const Observer&) = delete;
+	Observer& operator=(const Observer&) = delete;
+	Observer() = default;
+
+private:
+	template<typename Observers> friend class Observable;
+
+	using Signal = boost::signals2::signal<Signature>;
+	using SignalResult = typename Signal::result_type;
+
+	Signal signal_;
+};
+
+
+// Generic observable mixin - users must derive from it.
+template<typename Observers> class Observable {
+private:
+	using ObserverTable = typename Observers::ObserverTable;
+
+public:
+	// Registers an observer.
+	template<size_t ObserverId, typename F>
+	boost::signals2::connection
+		Register(F&& f) {
+		return std::get<ObserverId>(signals_).signal_.connect(std::forward<F>(f));
+	}
+
+protected:
+	Observable() = default;
+
+	// Notifies observers.
+	template<size_t ObserverId, typename... Args>
+	typename std::tuple_element<ObserverId, ObserverTable>::type::SignalResult
+		Notify(Args&& ... args) const {
+		return std::get<ObserverId>(signals_).signal_(std::forward<Args>(args)...);
+	}
+
+private:
+	ObserverTable signals_;
+};
+
+
+//-----------------------------------------------------------------------------
+// Example usage.
+//-----------------------------------------------------------------------------
+
 #include <iostream>
 
-using namespace std;
- 
-#include <boost/signals2.hpp>
-using namespace boost::signals2;
 
-#include <boost/random.hpp>
-using namespace boost;
-
-class ring
-{
-public:
-	typedef signal<void()> signal_t;
-	typedef signal_t::slot_type slot_t;
-
-	connection connect(const slot_t& s) {
-		return alarm.connect(s);
-	}
-
-	void press()
-	{
-		cout << "Ring alarm..." << endl;
-		alarm();
-	}
-private:
-	signal_t alarm;
+// Defines observers for Windows class.
+struct WindowObservers {
+	enum { ShowEvent, CloseEvent ,InitEvent};
+	using ObserverTable = std::tuple<
+		Observer<void()>,                 // ShowEvent
+		Observer<bool(bool force_close)>,  // CloseEvent
+		Observer<void()>
+	>;
 };
 
-typedef variate_generator<rand48, uniform_smallint<> > bool_rand;
-bool_rand g_rand(rand48(time(0)), uniform_smallint<>(0, 100));
 
-extern char const  nurse1[] = "Mary";
-extern char const  nurse2[] = "Kate";
-
-template<char const* name>
-class nurse
-{
-private:
-	bool_rand& rand;
+// Window: our Observable.
+class Window : public Observable<WindowObservers> {
 public:
-	nurse() :rand(g_rand) {}
+	void Show() {
+		std::cout << "Window::Show called." << std::endl;
+		Notify<WindowObservers::ShowEvent>();
+		std::cout << "Window::Show handled." << std::endl << std::endl;
+	}
 
-	void action()
-	{
-		cout << name;
-		if (rand() > 30)
-		{
-			cout << " wakeup and open door." << endl;
+	bool Close(bool force_close = false) {
+		std::cout << "Window::Close called: force_close == "
+			<< std::boolalpha << force_close << "." << std::endl;
+
+		const boost::optional<bool> can_close{
+		  Notify<WindowObservers::CloseEvent>(force_close) };
+		std::cout << "Window::Close handled. can_close == "
+			<< std::boolalpha << (!can_close || *can_close) << "."
+			<< std::endl << std::endl;
+
+		const bool closing{ force_close || !can_close || *can_close };
+		if (closing) {
+			// Actually close the window.
+			// ...  
 		}
-		else
-		{
-			cout << " is sleeping..." << endl;
-		}
+		return closing;
+	}
+	void Init() {
+		Notify<WindowObservers::InitEvent>();
 	}
 };
 
-extern char const  baby1[] = "Tom";
-extern char const  baby2[] = "Jerry";
-
-template<char const* name>
-class baby
-{
-private:
-	bool_rand& rand;
+// Application: our Observer.
+class Application {
 public:
-	baby() :rand(g_rand) {}
-
-	void action()
-	{
-		cout << "Baby " << name;
-		if (rand() > 50)
-		{
-			cout << " wakeup and crying loudly..." << endl;
-		}
-		else
-		{
-			cout << " is sleeping sweetly..." << endl;
-		}
-	}
-};
-
-class guest
-{
-public:
-	void press(ring& r)
-	{
-		cout << "A guest press the ring." << endl;
-		r.press();
-	}
-};
-
-void case1()
-{
-	ring r;
-	nurse<nurse1> n1;
-	nurse<nurse2> n2;
-	baby<baby1> b1;
-	baby<baby2> b2;
-	guest g;
-
-
-	r.connect(bind(&nurse<nurse1>::action, n1));
-	r.connect(bind(&nurse<nurse2>::action, n2));
-	r.connect(bind(&baby<baby1>::action, b1));
-	r.connect(bind(&baby<baby2>::action, b2));
-
-	g.press(r);
-}
-
-class demo_class
-{
-public:
-	typedef signal<void()> signal_t;
-	boost::shared_ptr<signal_t> sig;
-
-	int x;
-	demo_class() :sig(new signal_t), x(10) {}
-};
-
-void print()
-{
-	cout << "hello sig." << endl;
-}
-
-void case2()
-{
-	demo_class obj;
-	assert(obj.sig.use_count() == 1);
-	demo_class obj2(obj);
-	assert(obj.sig.use_count() == 2);
-
-	obj.sig->connect(&print);
-	(*obj2.sig)();
-}
-decltype(auto) aaa();
-class combiner
-{
-public:
-	typedef bool result_type;
-	template<typename InputIterator>
-	result_type operator()(InputIterator begin, InputIterator end) const
-	{
-		while (begin != end)
-		{
-			if (*begin > 100)
-				return true;
-		}
-		return false;
-	}
-};
-
-
-template<int N>
-struct slots
-{
-	int operator()(const connection& conn, int x)
-	{
-		cout << "conn=" << conn.connected() << endl;
-		return x * N;
-	}
-
-};
-
-void case3()
-{
-	typedef signal<int(int) > signal_t;
-	typedef signal_t::extended_slot_type slot_t;
-	signal_t sig;
-
-
-	sig.connect_extended(slot_t(&slots<10>::operator(), slots<10>(), _1, _2));
-	sig.connect_extended(slot_t(&slots<20>::operator(), slots<20>(), _1, _2));
-	sig(5);
-}
-
-void f()
-{
-	cout << "func called" << endl;
-}
-
-void case4()
-{
-	boost::function<void()> func;
-	func = f;
-	func();
-	signal<void()> sig;
-	sig.connect(&f);
-	sig();
-}
-
-template<typename Signature>
-class sig_ex
-{
-public:
-	typedef signal<Signature> signal_type;
-	typedef typename signal_type::slot_type slot_type;
-
-	connection connect(const slot_type& s)
-	{
-		return sig.connect(s);
-	}
-
-	connection operator+=(const slot_type& s)
-	{
-		return connect(s);
-	}
-
-	template<typename ... Args>
-	typename signal_type::result_type
-		operator()(Args&& ... args)
-	{
-		return sig(std::forward<Args>(args)...);
+	explicit Application(Window& window) : window_(window) {
+		// Register window observers.
+		window_.Register<WindowObservers::ShowEvent>([this]() {
+			OnWindowShow();
+			});
+		window.Register<WindowObservers::CloseEvent>([this](bool force_close) {
+			return OnWindowClose(force_close);
+			});
+		window.Register<WindowObservers::InitEvent>([this]() {
+			return OnWindowInit();
+			});
 	}
 
 private:
-	signal_type sig;
-};
-
-template<int N>
-struct slots_ex
-{
-	int operator()(int x)
-	{
-		cout << "slot" << N << " called" << endl;
-		return x * N;
+	void OnWindowShow() {
+		std::cout << "Application::OnWindowShow called." << std::endl;
 	}
 
+	bool OnWindowClose(bool force_close) {
+		std::cout << "Application::WindowClose called: force_close == "
+			<< std::boolalpha << force_close << "." << std::endl;
+		return force_close;
+	}
+
+	void OnWindowInit() {
+		std::cout << "Init" << std::endl;
+	}
+
+	Window& window_;
 };
 
-void case5()
-{
-	sig_ex<int(int)> sig;
+#include "iostream"
 
-	sig += slots_ex<10>();
-	sig += slots_ex<5>();
-
-	sig(2);
+void foo(int&& i) {
+	i++;
 }
 
-
-#if !defined(AV_TEST)
-int main1(int, char**)
-#else
-int main(int, char**)
-#endif
-{
-	aaa();
-	case1();
-	case2();
-	case3();
-	case4();
-	case5();
+void case11(int&& i) {
+	foo(std::forward<int>(i));
 }
 
-decltype(auto) aaa()
-{
-	cout << "000" << endl;
-	return 0;
+void case12(int& i) {
+	foo(std::forward<int>(i));
+}
+
+int main() {
+	int i = 1;
+	int& j = i;
+
+	case11(std::forward<int>(i));
+	std::cout << i << std::endl;
+	case11(std::forward<int>(j));
+	std::cout << i << std::endl;
+	case12(std::forward<int&>(i));
+	std::cout << i << std::endl;
+	case12(std::forward<int&>(j));
+	std::cout << i << std::endl;
 }

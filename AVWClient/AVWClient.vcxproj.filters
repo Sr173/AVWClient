@@ -65,5 +65,8 @@
     <ClInclude Include="CommonDefine.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.hpp">
+      <Filter>Design Pattern</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
