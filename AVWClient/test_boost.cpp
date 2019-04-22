@@ -1,170 +1,96 @@
-﻿#include <boost/beast/core.hpp>
+﻿//
+// Copyright (c) 2016-2019 Vinnie Falco (vinnie dot falco at gmail dot com)
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+// Official repository: https://github.com/boostorg/beast
+//
+
+//------------------------------------------------------------------------------
+//
+// Example: WebSocket client, synchronous
+//
+//------------------------------------------------------------------------------
+
+//[example_websocket_client
+
+#include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <cstdlib>
-#include <functional>
 #include <iostream>
-#include <memory>
 #include <string>
 
-using tcp = boost::asio::ip::tcp;               // from <boost/asio/ip/tcp.hpp>
-namespace websocket = boost::beast::websocket;  // from <boost/beast/websocket.hpp>
-
-//------------------------------------------------------------------------------
-
-// Report a failure
-void
-fail(boost::system::error_code ec, char const* what)
-{
-	std::cerr << what << ": " << ec.message() << "\n";
-}
+namespace beast = boost::beast;         // from <boost/beast.hpp>
+namespace http = beast::http;           // from <boost/beast/http.hpp>
+namespace websocket = beast::websocket; // from <boost/beast/websocket.hpp>
+namespace net = boost::asio;            // from <boost/asio.hpp>
+using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 // Sends a WebSocket message and prints the response
-class session : public std::enable_shared_from_this<session>
+int main(int argc, char** argv)
 {
-	tcp::resolver resolver_;
-	websocket::stream<tcp::socket> ws_;
-	boost::beast::multi_buffer buffer_;
-	std::string host_;
-	std::string text_;
-
-public:
-	// Resolver and socket require an io_context
-	explicit
-		session(boost::asio::io_context& ioc)
-		: resolver_(ioc)
-		, ws_(ioc)
+	try
 	{
-	}
+		auto const host = "127.0.0.1";
+		auto const port = "8888";
+		auto const text = "ping";
 
-	// Start the asynchronous operation
-	void
-		run(
-			char const* host,
-			char const* port,
-			char const* text)
-	{
-		// Save these for later
-		host_ = host;
-		text_ = text;
+		// The io_context is required for all I/O
+		net::io_context ioc;
+
+		// These objects perform our I/O
+		tcp::resolver resolver{ ioc };
+		websocket::stream<tcp::socket> ws{ ioc };
 
 		// Look up the domain name
-		resolver_.async_resolve(
-			host,
-			port,
-			std::bind(
-				&session::on_resolve,
-				shared_from_this(),
-				std::placeholders::_1,
-				std::placeholders::_2));
-	}
-
-	void
-		on_resolve(
-			boost::system::error_code ec,
-			tcp::resolver::results_type results)
-	{
-		if (ec)
-			return fail(ec, "resolve");
+		auto const results = resolver.resolve(host, port);
 
 		// Make the connection on the IP address we get from a lookup
-		boost::asio::async_connect(
-			ws_.next_layer(),
-			results.begin(),
-			results.end(),
-			std::bind(
-				&session::on_connect,
-				shared_from_this(),
-				std::placeholders::_1));
-	}
+		net::connect(ws.next_layer(), results.begin(), results.end());
 
-	void
-		on_connect(boost::system::error_code ec)
-	{
-		if (ec)
-			return fail(ec, "connect");
+		// Set a decorator to change the User-Agent of the handshake
+		ws.set_option(websocket::stream_base::decorator(
+			[](websocket::request_type & req)
+			{
+				req.set(http::field::user_agent,
+					std::string(BOOST_BEAST_VERSION_STRING) +
+					" websocket-client-coro");
+			}));
 
 		// Perform the websocket handshake
-		ws_.async_handshake(host_, "/",
-			std::bind(
-				&session::on_handshake,
-				shared_from_this(),
-				std::placeholders::_1));
-	}
-
-	void
-		on_handshake(boost::system::error_code ec)
-	{
-		if (ec)
-			return fail(ec, "handshake");
+		ws.handshake(host, "/");
 
 		// Send the message
-		ws_.async_write(
-			boost::asio::buffer(text_),
-			std::bind(
-				&session::on_write,
-				shared_from_this(),
-				std::placeholders::_1,
-				std::placeholders::_2));
-	}
+		ws.write(net::buffer(std::string(text)));
 
-	void
-		on_write(
-			boost::system::error_code ec,
-			std::size_t bytes_transferred)
-	{
-		boost::ignore_unused(bytes_transferred);
-
-		if (ec)
-			return fail(ec, "write");
+		// This buffer will hold the incoming message
+		beast::flat_buffer buffer;
 
 		// Read a message into our buffer
-		ws_.async_read(
-			buffer_,
-			std::bind(
-				&session::on_close,
-				shared_from_this(),
-				std::placeholders::_1,
-				std::placeholders::_2));
-	}
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
 
-
-
-	void
-		on_close(boost::system::error_code ec,
-			std::size_t bytes_transferred)
-	{
-		if (ec)
-			return fail(ec, "close");
+		// Close the WebSocket connection
+		ws.close(websocket::close_code::normal);
 
 		// If we get here then the connection is closed gracefully
 
-		// The buffers() function helps print a ConstBufferSequence
-		for (auto i : buffer_.data()) {
-			std::cout << std::string((char*)i.data(), i.size()) << std::endl;
-		}
+		// The make_printable() function helps print a ConstBufferSequence
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
 	}
-};
-
-//------------------------------------------------------------------------------
-
-int main(int argc, char** argv)
-{
-	auto const host = "127.0.0.1";
-	auto const port = "8080";
-	auto const text = "hello world";
-
-	// The io_context is required for all I/O
-	boost::asio::io_context ioc;
-
-	// Launch the asynchronous operation
-	std::make_shared<session>(ioc)->run(host, port, text);
-
-	// Run the I/O service. The call will return when
-	// the get operation is complete.
-	while (ioc.run_one()) {
-
+	catch (std::exception const& e)
+	{
+		std::cerr << "Error: " << e.what() << std::endl;
+		return EXIT_FAILURE;
 	}
 	return EXIT_SUCCESS;
 }
