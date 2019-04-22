@@ -1,3 +1,20 @@
+//
+// Copyright (c) 2016-2019 Vinnie Falco (vinnie dot falco at gmail dot com)
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+// Official repository: https://github.com/boostorg/beast
+//
+
+//------------------------------------------------------------------------------
+//
+// Example: WebSocket client, synchronous
+//
+//------------------------------------------------------------------------------
+
+//[example_websocket_client
+
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/asio/connect.hpp>
@@ -5,13 +22,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include "coroutine.h"
-
-
-
-#pragma comment (lib,"ws2_32.lib")
-#pragma comment (lib,"G:\\bysj\\libgo\\lib\\libgo_MDD_X64.lib")
-#pragma comment (lib,"libboost_date_time-vc142-mt-gd-x64-1_70.lib")
 
 namespace beast = boost::beast;         // from <boost/beast.hpp>
 namespace http = beast::http;           // from <boost/beast/http.hpp>
@@ -20,12 +30,12 @@ namespace net = boost::asio;            // from <boost/asio.hpp>
 using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 // Sends a WebSocket message and prints the response
-int main111111111(int argc, char** argv)
+int main(int argc, char** argv)
 {
 	try
 	{
 		auto const host = "127.0.0.1";
-		auto const port = "7777";
+		auto const port = "8888";
 		auto const text = "ping";
 
 		// The io_context is required for all I/O
@@ -58,22 +68,24 @@ int main111111111(int argc, char** argv)
 
 		// This buffer will hold the incoming message
 		beast::flat_buffer buffer;
-		g_Scheduler.goStart(4, 0);
 
 		// Read a message into our buffer
-		for (int i = 0; i < 100; i++) {
-			ws.read(buffer);
-			std::cout << beast::make_printable(buffer.data()) << std::endl;
-		}
-		while (!g_Scheduler.IsEmpty()) {
-		}
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
+		ws.read(buffer);
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
+
 		// Close the WebSocket connection
+		ws.close(websocket::close_code::normal);
 
 		// If we get here then the connection is closed gracefully
 
 		// The make_printable() function helps print a ConstBufferSequence
-		ws.close(websocket::close_code::normal);
-
+		std::cout << beast::make_printable(buffer.data()) << std::endl;
 	}
 	catch (std::exception const& e)
 	{
