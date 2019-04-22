@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{F47286A1-9430-4B32-B830-88BFC37AD451}</ProjectGuid>
+    <ProjectGuid>{6DEDDFEE-AFF5-41FD-8C9C-63C9D6D9E501}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>AVWClient</RootNamespace>
+    <RootNamespace>test</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,21 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>G:\boost_1_70_0;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\boost_1_70_0;G:\bysj\libgo\libgo;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>G:\bysj\libgo\libgo;G:\boost_1_70_0;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\boost_1_70_0;G:\bysj\libgo\libgo;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>G:\boost_1_70_0;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\bysj\libgo\libgo;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>G:\boost_1_70_0;G:\bysj\libgo\libgo;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,6 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,31 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="AVWClient.cpp" />
-    <ClCompile Include="imgui.cpp" />
-    <ClCompile Include="imgui_demo.cpp" />
-    <ClCompile Include="imgui_draw.cpp" />
-    <ClCompile Include="imgui_impl_dx9.cpp" />
-    <ClCompile Include="imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="ImplWindow.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="test_async_boost.cpp" />
-    <ClCompile Include="test_boost.cpp" />
-    <ClCompile Include="Websocket.cpp" />
-    <ClCompile Include="WindowsBase.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Application.hpp" />
-    <ClInclude Include="CommonDefine.h" />
-    <ClInclude Include="IApplication.hpp" />
-    <ClInclude Include="ImplWindow.hpp" />
-    <ClInclude Include="MainWindow.hpp" />
-    <ClInclude Include="Observer.hpp" />
-    <ClInclude Include="Singleton.hpp" />
-    <ClInclude Include="Websocket.hpp" />
-    <ClInclude Include="WindowsBase.hpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
