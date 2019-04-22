@@ -72,16 +72,18 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\boost_1_70_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\boost_1_70_0;$(IncludePath)</IncludePath>
+    <LibraryPath>G:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>G:\bysj\libgo\libgo;G:\boost_1_70_0;$(IncludePath)</IncludePath>
+    <LibraryPath>G:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\boost_1_70_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>G:\boost_1_70_0;$(IncludePath)</IncludePath>
+    <LibraryPath>G:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -165,6 +167,7 @@
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="ImplWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="test_async_boost.cpp" />
     <ClCompile Include="test_boost.cpp" />
     <ClCompile Include="WindowsBase.cpp" />
   </ItemGroup>

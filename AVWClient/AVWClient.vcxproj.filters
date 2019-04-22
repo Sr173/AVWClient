@@ -60,9 +60,6 @@
     <ClCompile Include="imgui_impl_win32.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="test_boost.cpp">
-      <Filter>test</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Application</Filter>
     </ClCompile>
@@ -74,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
       <Filter>Window\MainWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="test_async_boost.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="test_boost.cpp">
+      <Filter>test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
