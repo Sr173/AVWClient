@@ -37,6 +37,9 @@
     <Filter Include="Window\MainWindow">
       <UniqueIdentifier>{0391fbda-1c50-45ca-be7e-4921e8e2cf51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WebSocket">
+      <UniqueIdentifier>{081df85f-68d5-409c-b152-269a48b059f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AVWClient.cpp">
@@ -78,6 +81,9 @@
     <ClCompile Include="test_boost.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="Websocket.cpp">
+      <Filter>WebSocket</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">
@@ -103,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="MainWindow.hpp">
       <Filter>Window\MainWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="Websocket.hpp">
+      <Filter>WebSocket</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
