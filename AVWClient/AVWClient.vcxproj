@@ -77,8 +77,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>G:\bysj\libgo\libgo;G:\boost_1_70_0;$(IncludePath)</IncludePath>
-    <LibraryPath>G:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\bysj\libgo\libgo;D:\boost_1_70_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

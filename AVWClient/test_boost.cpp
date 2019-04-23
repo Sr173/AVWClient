@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright (c) 2016-2019 Vinnie Falco (vinnie dot falco at gmail dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -30,7 +30,7 @@ namespace net = boost::asio;            // from <boost/asio.hpp>
 using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 // Sends a WebSocket message and prints the response
-int main(int argc, char** argv)
+int main1111111(int argc, char** argv)
 {
 	try
 	{

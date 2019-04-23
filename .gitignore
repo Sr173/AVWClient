@@ -6,3 +6,9 @@
 /AVWClient/Debug
 *.ilk
 *.pdb
+*.lastbuildstate
+*.tlog
+*.log
+*.obj
+*.idb
+*.exe
