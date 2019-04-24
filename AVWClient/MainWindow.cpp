@@ -16,7 +16,8 @@ void MainWindow::pos(ImVec2 pos)
 
 }
 
-void MainWindow::size(ImVec2 pos)
+void MainWindow::size(
+	ImVec2 pos)
 {
 }
 
@@ -32,7 +33,6 @@ void MainWindow::render()
 		ImGui::BeginMainMenuBar();
 		ImGui::MenuItem("1", "1" );
 		ImGui::EndMainMenuBar();
-
 		auto pos = ImGui::GetWindowPos();
 		if (pos.x >= 1 || pos.y >= 1 || pos.x <= 1 || pos.y <= 1) {
 			auto mainPos = ImplWindow::getPtr()->getpos();
