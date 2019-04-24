@@ -27,7 +27,7 @@ void MainWindow::text(std::string txt)
 void MainWindow::render()
 {
 	static bool isOpen = false;
-
+	ImGui::ShowDemoWindow();
 	ImGui::Begin(u8"Anti Virus 1.0",&isOpen, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_::ImGuiWindowFlags_MenuBar); {
 		ImGui::BeginMainMenuBar();
 		ImGui::MenuItem("1", "1" );

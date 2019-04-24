@@ -23,7 +23,7 @@ class Websocket :
 public:
 	Websocket(boost::asio::io_context& ioc);
 	~Websocket();
-	void run(std::string ip, std::string port, std::string uuid);
+	void run(std::string ip, std::string port, std::string path = "/");
 	void run();
 private:
 	void on_resolve(boost::beast::error_code ec, boost::asio::ip::tcp::resolver::results_type results);
@@ -39,6 +39,6 @@ private:
 
 	std::string port_;
 	std::string host_;
-	std::string uuid_;
+	std::string path_;
 };
 

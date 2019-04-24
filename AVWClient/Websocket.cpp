@@ -19,8 +19,12 @@ Websocket::~Websocket()
 
 }
 
-void Websocket::run(std::string ip, std::string port, std::string uuid)
+void Websocket::run(std::string ip, std::string port,std::string path)
 {
+	host_ = ip;
+	port_ = port;
+	path_ = path;
+
 	// Look up the domain name
 	resolver_.async_resolve(
 		ip,
@@ -32,7 +36,7 @@ void Websocket::run(std::string ip, std::string port, std::string uuid)
 
 void Websocket::run()
 {
-	run(host_, port_, uuid_);
+	run(host_, port_, path_);
 }
 
 void Websocket::on_resolve(beast::error_code ec, tcp::resolver::results_type results)
@@ -75,7 +79,7 @@ void Websocket::on_connect(beast::error_code ec, tcp::resolver::results_type::en
 		}));
 
 	// Perform the websocket handshake
-	ws_.async_handshake(host_, "/",
+	ws_.async_handshake(host_, path_,
 		beast::bind_front_handler(
 			&Websocket::on_handshake,
 			shared_from_this()));

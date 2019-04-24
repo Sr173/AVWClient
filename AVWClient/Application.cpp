@@ -24,8 +24,8 @@ void Application::exec()
 			::DispatchMessage(&msg);
 			continue;
 		}
-		ioc_.run_one();
 		Notify<ApplicationObservers::ApplicationEventLoopStart>();
+		ioc_.run_one();
 		for (auto i : all_window_) {
 			if (i->isShow()) {
 				i->render();

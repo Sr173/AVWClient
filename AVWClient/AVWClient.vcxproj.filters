@@ -35,9 +35,6 @@
     <Filter Include="Window\ImGui">
       <UniqueIdentifier>{8115fcbf-d4c9-4a20-8b47-f819a2a45fbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Window\ImGuiImpl">
-      <UniqueIdentifier>{14eddd8d-bec2-4703-97db-a4ea46a21391}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Application">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
@@ -48,6 +45,9 @@
     <Filter Include="main">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Window\ImGui\ImGuiImpl">
+      <UniqueIdentifier>{14eddd8d-bec2-4703-97db-a4ea46a21391}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,17 +66,11 @@
     <ClCompile Include="imgui_widgets.cpp">
       <Filter>Window\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="imgui_impl_dx9.cpp">
-      <Filter>Window\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_win32.cpp">
-      <Filter>Window\ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Common\Application</Filter>
     </ClCompile>
     <ClCompile Include="ImplWindow.cpp">
-      <Filter>Window\ImGuiImpl</Filter>
+      <Filter>Window\ImGui\ImGuiImpl</Filter>
     </ClCompile>
     <ClCompile Include="WindowsBase.cpp">
       <Filter>Window\WindowBase</Filter>
@@ -102,6 +96,15 @@
     <ClCompile Include="test_websocket.cpp">
       <Filter>Common\test</Filter>
     </ClCompile>
+    <ClCompile Include="imgui_impl_dx9.cpp">
+      <Filter>Window\ImGui\ImGuiImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>Window\ImGui\ImGuiImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="test_http_async.cpp">
+      <Filter>Common\test</Filter>
+    </ClCompile>
     <ClCompile Include="test_http.cpp">
       <Filter>Common\test</Filter>
     </ClCompile>
@@ -123,7 +126,7 @@
       <Filter>Common\Application</Filter>
     </ClInclude>
     <ClInclude Include="ImplWindow.hpp">
-      <Filter>Window\ImGuiImpl</Filter>
+      <Filter>Window\ImGui\ImGuiImpl</Filter>
     </ClInclude>
     <ClInclude Include="WindowsBase.hpp">
       <Filter>Window\WindowBase</Filter>
