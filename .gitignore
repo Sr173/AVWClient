@@ -14,3 +14,4 @@
 *.db
 *.exe
 *.ipch
+/.vs/AVWClient/v15

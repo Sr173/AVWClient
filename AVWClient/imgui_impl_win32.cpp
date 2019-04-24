@@ -46,7 +46,7 @@ static bool                 g_HasGamepad = false;
 static bool                 g_WantUpdateHasGamepad = true;
 
 // Functions
-bool    ImGui_ImplWin32_Init(void* hwnd)
+bool ImGui_ImplWin32_Init(void* hwnd)
 {
     if (!::QueryPerformanceFrequency((LARGE_INTEGER *)&g_TicksPerSecond))
         return false;
