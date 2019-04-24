@@ -1,6 +1,12 @@
 ﻿#include "Application.hpp"
-#include <windows.h>
 #include "WindowsBase.hpp"
+
+using boost::asio::io_context;
+
+Application::Application()
+	: ioc_()
+{
+}
 
 void Application::init()
 {
@@ -18,8 +24,9 @@ void Application::exec()
 			::DispatchMessage(&msg);
 			continue;
 		}
+		ioc_.run_one();
 		Notify<ApplicationObservers::ApplicationEventLoopStart>();
-		for (auto i : _allWindow) {
+		for (auto i : all_window_) {
 			if (i->isShow()) {
 				i->render();
 			}
@@ -43,12 +50,12 @@ bool Application::IsQuit()
 
 bool Application::addRenderWindow(WindowBase* window)
 {
-	_allWindow.push_back(window);
+	all_window_.push_back(window);
 	return false;
 }
 
 bool Application::deleteRenderWindow(WindowBase* window)
 {
-	_allWindow.remove(window);
+	all_window_.remove(window);
 	return false;
 }

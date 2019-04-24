@@ -169,7 +169,7 @@ void ImplWindow::endFrame()
 void ImplWindow::pos(ImVec2 pos)
 {
 	SetWindowPos(hWnd, 0, pos.x, pos.y, 0, 0, SWP_NOSIZE);
-	_pos = pos;
+	pos_ = pos;
 }
 
 void ImplWindow::size(ImVec2 pos)

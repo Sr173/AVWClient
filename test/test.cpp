@@ -2,12 +2,14 @@
 //
 
 #include <iostream>
-#include "G:\\bysj\\libgo\\libgo\\libgo.h"
+//#include "D:\\bysj\\libgo\\libgo\\libgo.h"
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <io.h>
 #include <fcntl.h>
 #include <string>
+#include "map"
+#include "windows.h"
 
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;

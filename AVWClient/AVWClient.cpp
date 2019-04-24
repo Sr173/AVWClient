@@ -7,7 +7,7 @@
 #include "Application.hpp"
 #include "MainWindow.hpp"
 
-int main1(int, char**)
+int mainGGGG3(int, char**)
 {
 	auto ptr = Application::getPtr();;
 	ImplWindow::getPtr()->text("Anti Virus 1.0");

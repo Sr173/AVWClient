@@ -162,7 +162,6 @@ public:
 			beast::bind_front_handler(
 				&session::on_read,
 				shared_from_this()));
-
 	}
 
 	void
@@ -180,7 +179,7 @@ public:
 
 //------------------------------------------------------------------------------
 
-int main(int argc, char** argv)
+int mainGGGGG(int argc, char** argv)
 {
 	auto const host = "127.0.0.1";
 	auto const port = "7777";

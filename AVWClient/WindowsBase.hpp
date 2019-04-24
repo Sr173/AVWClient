@@ -10,14 +10,14 @@ public:
 	virtual void pos(ImVec2 pos) = 0;
 	virtual void size(ImVec2 pos) = 0;
 	virtual void text(std::string txt) = 0;
-	virtual ImVec2 getpos() { return _pos; }
-	virtual ImVec2 getsize() { return _size; }
-	virtual std::string gettext() { return _text; }
-	virtual void hidden() { _isShow = false; }
-	virtual bool isShow() { return _isShow; }
+	virtual ImVec2 getpos() { return pos_; }
+	virtual ImVec2 getsize() { return size_; }
+	virtual std::string gettext() { return text_; }
+	virtual void hidden() { is_show_ = false; }
+	virtual bool isShow() { return is_show_; }
 protected:
-	ImVec2 _pos = { 0,0, };
-	ImVec2 _size = { 0,0 };
-	std::string _text = "";
-	bool _isShow = true;
+	ImVec2 pos_ = { 0,0, };
+	ImVec2 size_ = { 0,0 };
+	std::string text_ = "";
+	bool is_show_ = true;
 };
