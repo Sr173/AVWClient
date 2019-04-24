@@ -110,7 +110,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -146,7 +146,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AVWClient.cpp" />
+    <ClCompile Include="Http.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
@@ -166,17 +167,22 @@
     <ClCompile Include="imgui_impl_win32.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="ImplWindow.cpp" />
+    <ClCompile Include="JsonAnalysiscpp.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="test_async_boost.cpp" />
     <ClCompile Include="test_boost.cpp" />
+    <ClCompile Include="test_http.cpp" />
+    <ClCompile Include="test_websocket.cpp" />
     <ClCompile Include="Websocket.cpp" />
     <ClCompile Include="WindowsBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="CommonDefine.h" />
+    <ClInclude Include="Http.h" />
     <ClInclude Include="IApplication.hpp" />
     <ClInclude Include="ImplWindow.hpp" />
+    <ClInclude Include="JsonAnalysiscpp.h" />
     <ClInclude Include="MainWindow.hpp" />
     <ClInclude Include="Observer.hpp" />
     <ClInclude Include="Singleton.hpp" />

@@ -1,10 +1,15 @@
 ﻿#pragma once
+#include <boost/asio/io_context.hpp>
 #include "IApplication.hpp"
 #include "Singleton.hpp"
 #include "Observer.hpp"
 
 class WindowBase;
-
+namespace boost {
+	namespace asio{
+	class io_context;
+	};
+};
 struct ApplicationObservers {
 	enum { ApplicationCreateed, ApplicationEventLoopStart, ApplicationEventLoopEnd, ApplicationQuit };
 	using ObserverTable = std::tuple<
@@ -21,14 +26,15 @@ class Application :
 	public Singleton<Application>
 	{
 public:
+	Application();
 	void init();
 	void exec() override;
 	void quit();
 	bool IsQuit() override;
 	bool addRenderWindow(WindowBase* window);
 	bool deleteRenderWindow(WindowBase* window);
-
 protected:
 	bool _isQuit = false;
-	std::list<WindowBase*> _allWindow;
+	std::list<WindowBase*> all_window_;
+	boost::asio::io_context ioc_;
 };

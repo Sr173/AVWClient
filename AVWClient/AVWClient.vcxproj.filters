@@ -1,32 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ImGui">
-      <UniqueIdentifier>{8115fcbf-d4c9-4a20-8b47-f819a2a45fbc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ImGuiImpl">
-      <UniqueIdentifier>{14eddd8d-bec2-4703-97db-a4ea46a21391}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Design Pattern">
-      <UniqueIdentifier>{6a085a38-c05a-49c4-a43f-ea52c9293815}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="test">
-      <UniqueIdentifier>{4f645000-01de-4126-b498-488e080c9ee7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{ba5a04fd-b622-47bc-98cd-81cdb8b1d89e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Network">
+      <UniqueIdentifier>{390b82ff-9b15-4df2-af1a-0466462f844f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\JsonAnaysis">
+      <UniqueIdentifier>{1d3139f3-de2f-47cc-ad58-b6a4e76b8418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\WebSocket">
+      <UniqueIdentifier>{081df85f-68d5-409c-b152-269a48b059f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Http">
+      <UniqueIdentifier>{97cf7011-dba7-4570-9eca-a4fcc7311183}</UniqueIdentifier>
     </Filter>
     <Filter Include="Window">
       <UniqueIdentifier>{d6289278-76c7-4adb-8b27-b6ffa5645878}</UniqueIdentifier>
@@ -37,37 +29,54 @@
     <Filter Include="Window\MainWindow">
       <UniqueIdentifier>{0391fbda-1c50-45ca-be7e-4921e8e2cf51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WebSocket">
-      <UniqueIdentifier>{081df85f-68d5-409c-b152-269a48b059f2}</UniqueIdentifier>
+    <Filter Include="Common\Design Pattern">
+      <UniqueIdentifier>{6a085a38-c05a-49c4-a43f-ea52c9293815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\ImGui">
+      <UniqueIdentifier>{8115fcbf-d4c9-4a20-8b47-f819a2a45fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\ImGuiImpl">
+      <UniqueIdentifier>{14eddd8d-bec2-4703-97db-a4ea46a21391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Application">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Common\test">
+      <UniqueIdentifier>{4f645000-01de-4126-b498-488e080c9ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AVWClient.cpp">
-      <Filter>源文件</Filter>
+      <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="imgui.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Window\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="imgui_demo.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Window\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="imgui_draw.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Window\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="imgui_widgets.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Window\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="imgui_impl_dx9.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Window\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="imgui_impl_win32.cpp">
-      <Filter>ImGui</Filter>
+      <Filter>Window\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>Application</Filter>
+      <Filter>Common\Application</Filter>
     </ClCompile>
     <ClCompile Include="ImplWindow.cpp">
-      <Filter>ImGuiImpl</Filter>
+      <Filter>Window\ImGuiImpl</Filter>
     </ClCompile>
     <ClCompile Include="WindowsBase.cpp">
       <Filter>Window\WindowBase</Filter>
@@ -76,33 +85,45 @@
       <Filter>Window\MainWindow</Filter>
     </ClCompile>
     <ClCompile Include="test_async_boost.cpp">
-      <Filter>test</Filter>
+      <Filter>Common\test</Filter>
     </ClCompile>
     <ClCompile Include="test_boost.cpp">
-      <Filter>test</Filter>
+      <Filter>Common\test</Filter>
     </ClCompile>
     <ClCompile Include="Websocket.cpp">
-      <Filter>WebSocket</Filter>
+      <Filter>Network\WebSocket</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonAnalysiscpp.cpp">
+      <Filter>Network\JsonAnaysis</Filter>
+    </ClCompile>
+    <ClCompile Include="Http.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="test_websocket.cpp">
+      <Filter>Common\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test_http.cpp">
+      <Filter>Common\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">
-      <Filter>Application</Filter>
+      <Filter>Common\Application</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.hpp">
-      <Filter>Design Pattern</Filter>
+      <Filter>Common\Design Pattern</Filter>
     </ClInclude>
     <ClInclude Include="CommonDefine.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Observer.hpp">
-      <Filter>Design Pattern</Filter>
+      <Filter>Common\Design Pattern</Filter>
     </ClInclude>
     <ClInclude Include="Application.hpp">
-      <Filter>Application</Filter>
+      <Filter>Common\Application</Filter>
     </ClInclude>
     <ClInclude Include="ImplWindow.hpp">
-      <Filter>ImGuiImpl</Filter>
+      <Filter>Window\ImGuiImpl</Filter>
     </ClInclude>
     <ClInclude Include="WindowsBase.hpp">
       <Filter>Window\WindowBase</Filter>
@@ -111,7 +132,13 @@
       <Filter>Window\MainWindow</Filter>
     </ClInclude>
     <ClInclude Include="Websocket.hpp">
-      <Filter>WebSocket</Filter>
+      <Filter>Network\WebSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonAnalysiscpp.h">
+      <Filter>Network\JsonAnaysis</Filter>
+    </ClInclude>
+    <ClInclude Include="Http.h">
+      <Filter>Network\Http</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
