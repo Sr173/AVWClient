@@ -77,8 +77,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\bysj\libgo\libgo;D:\boost_1_70_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\boost_1_70_0;C:\Users\admin\source\repos\AVWClient\thrty_party;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\admin\source\repos\AVWClient\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,6 +87,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>C:\Users\admin\source\repos\AVWClient\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\boost_1_70_0;C:\Users\admin\source\repos\AVWClient\thrty_party;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,6 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,7 +162,8 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AVWClient.cpp" />
-    <ClCompile Include="Http.cpp" />
+    <ClCompile Include="HttpWrapper.cpp" />
+    <ClCompile Include="HttpReply.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
@@ -180,7 +184,8 @@
   <ItemGroup>
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="CommonDefine.h" />
-    <ClInclude Include="Http.h" />
+    <ClInclude Include="HttpWrapper.hpp" />
+    <ClInclude Include="HttpReply.hpp" />
     <ClInclude Include="IApplication.hpp" />
     <ClInclude Include="ImplWindow.hpp" />
     <ClInclude Include="JsonAnalysiscpp.h" />

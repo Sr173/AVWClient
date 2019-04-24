@@ -1,5 +1,6 @@
 ﻿#include "Application.hpp"
 #include "WindowsBase.hpp"
+#include <libgo/libgo.h>
 
 using boost::asio::io_context;
 
@@ -18,6 +19,7 @@ void Application::exec()
 	MSG msg = { 0 };
 	while (msg.message != WM_QUIT)
 	{
+		co_yield;
 		if (::PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 		{
 			::TranslateMessage(&msg);
@@ -58,4 +60,9 @@ bool Application::deleteRenderWindow(WindowBase* window)
 {
 	all_window_.remove(window);
 	return false;
+}
+
+boost::asio::io_context* Application::get_io_context()
+{
+	return &ioc_;
 }

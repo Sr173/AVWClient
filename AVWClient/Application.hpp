@@ -33,6 +33,7 @@ public:
 	bool IsQuit() override;
 	bool addRenderWindow(WindowBase* window);
 	bool deleteRenderWindow(WindowBase* window);
+	boost::asio::io_context* get_io_context();
 protected:
 	bool _isQuit = false;
 	std::list<WindowBase*> all_window_;

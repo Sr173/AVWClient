@@ -23,6 +23,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <libgo/libgo.h>
 
 namespace beast = boost::beast;     // from <boost/beast.hpp>
 namespace http = beast::http;       // from <boost/beast/http.hpp>
@@ -30,13 +31,12 @@ namespace net = boost::asio;        // from <boost/asio.hpp>
 using tcp = net::ip::tcp;           // from <boost/asio/ip/tcp.hpp>
 
 // Performs an HTTP GET and prints the response
-int main(int argc, char** argv)
+int mainbvfcbdf(int argc, char** argv)
 {
 	try
 	{
 		SetConsoleOutputCP(CP_UTF8);
-
-		auto const host = "localhost";
+		auto const host = "www.baidu.com";
 		auto const port = "80";
 		auto const target = "/";
 		int version = argc == 5 && !std::strcmp("1.0", argv[4]) ? 10 : 11;
@@ -69,21 +69,25 @@ int main(int argc, char** argv)
 		http::response<http::dynamic_body> res;
 
 		// Receive the HTTP response
-		http::read(stream, buffer, res);
+		go[&]() { 
+			http::read(stream, buffer, res); 
+			std::cout << res << std::endl;
+			beast::error_code ec;
+			stream.socket().shutdown(tcp::socket::shutdown_both, ec);
+			if (ec && ec != beast::errc::not_connected)
+				throw beast::system_error{ ec };
+		};
 
 		// Write the message to standard out
-		std::cout << res << std::endl;
-
+		//
+		
 		// Gracefully close the socket
-		beast::error_code ec;
-		stream.socket().shutdown(tcp::socket::shutdown_both, ec);
 
 		// not_connected happens sometimes
 		// so don't bother reporting it.
 		//
-		if (ec && ec != beast::errc::not_connected)
-			throw beast::system_error{ ec };
-
+		std::cout << u8"协程开始" << std::endl;
+		co_sleep(2990);
 		// If we get here then the connection is closed gracefully
 	}
 	catch (std::exception const& e)

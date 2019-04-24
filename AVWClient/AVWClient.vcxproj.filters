@@ -90,9 +90,6 @@
     <ClCompile Include="JsonAnalysiscpp.cpp">
       <Filter>Network\JsonAnaysis</Filter>
     </ClCompile>
-    <ClCompile Include="Http.cpp">
-      <Filter>Network\Http</Filter>
-    </ClCompile>
     <ClCompile Include="test_websocket.cpp">
       <Filter>Common\test</Filter>
     </ClCompile>
@@ -107,6 +104,12 @@
     </ClCompile>
     <ClCompile Include="test_http.cpp">
       <Filter>Common\test</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpReply.cpp">
+      <Filter>Network\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpWrapper.cpp">
+      <Filter>Network\Http</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +143,10 @@
     <ClInclude Include="JsonAnalysiscpp.h">
       <Filter>Network\JsonAnaysis</Filter>
     </ClInclude>
-    <ClInclude Include="Http.h">
+    <ClInclude Include="HttpReply.hpp">
+      <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpWrapper.hpp">
       <Filter>Network\Http</Filter>
     </ClInclude>
   </ItemGroup>

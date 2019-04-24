@@ -1,4 +1,4 @@
-// dear imgui, v1.70 WIP
+﻿// dear imgui, v1.70 WIP
 // (main code and documentation)
 
 // Call and read ImGui::ShowDemoWindow() in imgui_demo.cpp for demo code.
@@ -9269,6 +9269,12 @@ static void SettingsHandlerWindow_WriteAll(ImGuiContext* imgui_ctx, ImGuiSetting
 #define WIN32_LEAN_AND_MEAN
 #endif
 #ifndef __MINGW32__
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <Windows.h>
 #else
 #include <windows.h>
