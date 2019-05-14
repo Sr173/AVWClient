@@ -37,7 +37,8 @@ HttpReply* HttpWrapper::get(std::string host, std::string port, std::string path
 			if (ec && ec != beast::errc::not_connected)
 				throw beast::system_error{ ec };
 			int size = buffer.data().size();
-			reply->data_ = std::string((char*)buffer.data().data(), size);
+			std::cout << res << std::endl;
+			reply->data_ = beast::buffers_to_string(res.body().data());
 			reply->ec_ = ec;
 			reply->finished();
 		}

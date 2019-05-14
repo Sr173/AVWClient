@@ -31,7 +31,7 @@ namespace net = boost::asio;        // from <boost/asio.hpp>
 using tcp = net::ip::tcp;           // from <boost/asio/ip/tcp.hpp>
 
 // Performs an HTTP GET and prints the response
-int mainbvfcbdf(int argc, char** argv)
+int mainfdd(int argc, char** argv)
 {
 	try
 	{
@@ -39,37 +39,37 @@ int mainbvfcbdf(int argc, char** argv)
 		auto const host = "www.baidu.com";
 		auto const port = "80";
 		auto const target = "/";
-		int version = argc == 5 && !std::strcmp("1.0", argv[4]) ? 10 : 11;
-
-		// The io_context is required for all I/O
-		net::io_context ioc;
-
-		// These objects perform our I/O
-		tcp::resolver resolver(ioc);
-		beast::tcp_stream stream(ioc);
-
-		// Look up the domain name
-		auto const results = resolver.resolve(host, port);
-
-		// Make the connection on the IP address we get from a lookup
-		stream.connect(results);
-
-		// Set up an HTTP GET request message
-		http::request<http::string_body> req{ http::verb::get, target, version };
-		req.set(http::field::host, host);
-		req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
-
-		// Send the HTTP request to the remote host
-		http::write(stream, req);
-
-		// This buffer is used for reading and must be persisted
-		beast::flat_buffer buffer;
-
-		// Declare a container to hold the response
-		http::response<http::dynamic_body> res;
-
 		// Receive the HTTP response
-		go[&]() { 
+		go[=]() { 
+
+			int version = argc == 5 && !std::strcmp("1.0", argv[4]) ? 10 : 11;
+
+			// The io_context is required for all I/O
+			net::io_context ioc;
+
+			// These objects perform our I/O
+			tcp::resolver resolver(ioc);
+			beast::tcp_stream stream(ioc);
+
+			// Look up the domain name
+			auto const results = resolver.resolve(host, port);
+
+			// Make the connection on the IP address we get from a lookup
+			stream.connect(results);
+
+			// Set up an HTTP GET request message
+			http::request<http::string_body> req{ http::verb::get, target, version };
+			req.set(http::field::host, host);
+			req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+
+			// Send the HTTP request to the remote host
+			http::write(stream, req);
+
+			// This buffer is used for reading and must be persisted
+			beast::flat_buffer buffer;
+
+			// Declare a container to hold the response
+			http::response<http::dynamic_body> res;
 			http::read(stream, buffer, res); 
 			std::cout << res << std::endl;
 			beast::error_code ec;
@@ -86,6 +86,7 @@ int mainbvfcbdf(int argc, char** argv)
 		// not_connected happens sometimes
 		// so don't bother reporting it.
 		//
+		g_Scheduler.Start();
 		std::cout << u8"协程开始" << std::endl;
 		co_sleep(2990);
 		// If we get here then the connection is closed gracefully

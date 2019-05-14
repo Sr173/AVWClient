@@ -63,8 +63,47 @@ std::string map2json(const std::map<std::string, std::string>& map) {
 	write_json(buf, pt, false);
 	return buf.str();
 }
+
+template<class T>
+class vi : public T {
+public:
+	virtual void test() override {
+		std::cout << "T" << std::endl;
+		T::test();
+	}
+};
+
+class A {
+public:
+	virtual void test() {
+		std::cout << "A" << std::endl;
+	}
+};
+
+class B : public A {
+public:
+	virtual void test() {
+		std::cout << "B" << std::endl;
+		A::test();
+	}
+};
+
+class D : public A {
+public:
+	virtual void test() {
+		std::cout << "D" << std::endl;
+		A::test();
+	}
+};
+
 int main()
 {
+	vi<D> d;
+	d.test();
+
+	vi<B> c;
+	c.test();
+
 	std::map<std::string, std::string> jsonMap;
 	SetConsoleOutputCP(CP_UTF8);
 

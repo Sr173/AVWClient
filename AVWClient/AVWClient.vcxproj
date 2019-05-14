@@ -77,8 +77,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\boost_1_70_0;C:\Users\admin\source\repos\AVWClient\thrty_party;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\admin\source\repos\AVWClient\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\boost_1_70_0;..\thrty_party;$(IncludePath)</IncludePath>
+    <LibraryPath>..\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,8 +87,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>C:\Users\admin\source\repos\AVWClient\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\boost_1_70_0;C:\Users\admin\source\repos\AVWClient\thrty_party;$(IncludePath)</IncludePath>
+    <LibraryPath>..\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\boost_1_70_0;..\thrty_party;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -175,6 +175,7 @@
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="test_async_boost.cpp" />
     <ClCompile Include="test_boost.cpp" />
+    <ClCompile Include="test_clamav.cpp" />
     <ClCompile Include="test_http.cpp" />
     <ClCompile Include="test_http_async.cpp" />
     <ClCompile Include="test_websocket.cpp" />

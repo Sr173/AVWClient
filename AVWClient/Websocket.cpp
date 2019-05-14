@@ -17,6 +17,7 @@ Websocket::Websocket(boost::asio::io_context& ioc)
 Websocket::~Websocket()
 {
 
+
 }
 
 void Websocket::run(std::string ip, std::string port,std::string path)
@@ -115,12 +116,12 @@ void Websocket::on_read(beast::error_code ec, std::size_t bytes_transferred)
 			shared_from_this()));
 }
 
-void Websocket::on_close(beast::error_code ec)
+void Websocket::on_close(beast::error_code ec) const
 {
 
 }
 
-void Websocket::fail(beast::error_code ec, char const* what)
+void Websocket::fail(beast::error_code ec, char const* what) const
 {
 	std::cerr << what << ": [" <<  ec.value() << "]:" << ec.message() << " " << "\n";
 }

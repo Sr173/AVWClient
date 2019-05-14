@@ -111,6 +111,9 @@
     <ClCompile Include="HttpWrapper.cpp">
       <Filter>Network\Http</Filter>
     </ClCompile>
+    <ClCompile Include="test_clamav.cpp">
+      <Filter>Common\test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">

@@ -30,8 +30,8 @@ private:
 	void on_connect(boost::beast::error_code ec, boost::asio::ip::tcp::resolver::results_type::endpoint_type);
 	void on_handshake(boost::beast::error_code ec);
 	void on_read(boost::beast::error_code ec, std::size_t bytes_transferred);
-	void on_close(boost::beast::error_code ec);
-	void fail(boost::beast::error_code ec, char const* what);
+	void on_close(boost::beast::error_code ec) const;
+	void fail(boost::beast::error_code ec, char const* what) const;
 
 	boost::beast::websocket::stream<boost::beast::tcp_stream> ws_;
 	boost::asio::ip::tcp::resolver resolver_;
