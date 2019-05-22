@@ -1,0 +1,3 @@
+[submodule "thrty_party/ClamAv"]
+	path = thrty_party/ClamAv
+	url = https://github.com/Sr173/ClamAv

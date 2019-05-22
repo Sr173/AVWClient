@@ -16,6 +16,7 @@
 #define NOMINMAX
 #endif
 #include "windows.h"
+#include <tuple>
 
 using boost::property_tree::ptree;
 using boost::property_tree::read_json;
@@ -96,27 +97,60 @@ public:
 	}
 };
 
+template <class,class...>
+class defer;
+
+template <class funx>
+class defer<funx> {
+public:
+	defer(funx f) : f(f) { }
+	~defer() { f(); }
+private:
+	funx* f;
+};
+
+template <class funx,class... rest>
+class defer<funx,rest...> : private defer<rest...> {
+public:
+	defer(funx f, rest... r) : f(f), { }
+	~defer() { f(); }
+private:
+	funx* f;
+	rest r;
+};
+
+
+
 int main()
 {
-	vi<D> d;
-	d.test();
+	auto lam = []() {
+		std::cout << "GG" << std::endl;
+	};
+	int b = 0;
+	defer<void(int), int> m([](int a) {
+		std::cout << "GG" << std::endl;
+		}
+	, 1);
+	//vi<D> d;
+	//d.test();
 
-	vi<B> c;
-	c.test();
+	//vi<B> c;
+	//c.test();
 
-	std::map<std::string, std::string> jsonMap;
-	SetConsoleOutputCP(CP_UTF8);
+	//std::map<std::string, std::string> jsonMap;
+	//SetConsoleOutputCP(CP_UTF8);
 
-	jsonMap[u8"哈哈"] = "1111";
-	jsonMap[u8"GG"] = "2222";
-	jsonMap[u8"那你"] = "3333";
+	//jsonMap[u8"哈哈"] = "1111";
+	//jsonMap[u8"GG"] = "2222";
+	//jsonMap[u8"那你"] = "3333";
 
-	auto strJson =  map2json(jsonMap);
-	std::cout << strJson << std::endl;
-	auto retnJsonMap = json2map(strJson);
+	//auto strJson =  map2json(jsonMap);
+	//std::cout << strJson << std::endl;
+	//auto retnJsonMap = json2map(strJson);
 
-	for (auto i : retnJsonMap) {
-		std::cout << i.first << " " << i.second << std::endl;
-	}
+	//for (auto i : retnJsonMap) {
+	//	std::cout << i.first << " " << i.second << std::endl;
+	//}
+	std::cout << "MM" << std::endl;
 	return 0;
 }

@@ -17,3 +17,8 @@
 #pragma comment(lib,"libgo_NoHook_MD_X64.lib")
 #endif
 #endif
+
+
+#pragma comment(lib,"thrty_party/ClamAv/")
+#else
+#pragma comment(lib,"libgo_NoHook_MD_X64.lib")
