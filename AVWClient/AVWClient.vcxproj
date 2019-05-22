@@ -77,8 +77,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\boost_1_70_0;..\thrty_party;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\admin\Personal\Graduation Project\AVWClient\thrty_party\ClamAV\win32;C:\Users\admin\Personal\Graduation Project\AVWClient\thrty_party\ClamAV\libclamav;C:\Users\admin\Personal\Graduation Project\AVWClient\thrty_party\ClamAV;D:\boost_1_70_0;..\thrty_party;$(IncludePath)</IncludePath>
     <LibraryPath>..\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <ExcludePath>C:\Users\admin\Personal\Graduation Project\AVWClient\AVWClient\x64\Debug;$(ExcludePath)</ExcludePath>
+    <ExecutablePath>C:\Users\admin\Personal\Graduation Project\AVWClient\AVWClient\x64\Debug;$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>C:\Users\admin\Personal\Graduation Project\AVWClient\AVWClient\x64\Debug;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -88,7 +91,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>..\thrty_party\libgo\lib;D:\boost_1_70_0\stage\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\boost_1_70_0;..\thrty_party;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\admin\Personal\Graduation Project\AVWClient\thrty_party\ClamAV\win32;C:\Users\admin\Personal\Graduation Project\AVWClient\thrty_party\ClamAV\libclamav;C:\Users\admin\Personal\Graduation Project\AVWClient\thrty_party\ClamAV;D:\boost_1_70_0;..\thrty_party;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

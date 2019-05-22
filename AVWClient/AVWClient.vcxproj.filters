@@ -114,6 +114,9 @@
     <ClCompile Include="test_clamav.cpp">
       <Filter>Common\test</Filter>
     </ClCompile>
+    <ClCompile Include="AVEngine.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="HttpWrapper.hpp">
       <Filter>Network\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="AVEngine.h">
+      <Filter>Common\Application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

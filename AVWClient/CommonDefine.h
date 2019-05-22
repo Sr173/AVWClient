@@ -18,7 +18,8 @@
 #endif
 #endif
 
-
-#pragma comment(lib,"thrty_party/ClamAv/")
+#ifdef _DEBUG
+#pragma comment(lib,"../thrty_party/ClamAv/win32/x64/debug/libclamav.lib")
 #else
-#pragma comment(lib,"libgo_NoHook_MD_X64.lib")
+#pragma comment(lib,"../thrty_party/ClamAv/win32/x64/debug/libclamav.lib")
+#endif

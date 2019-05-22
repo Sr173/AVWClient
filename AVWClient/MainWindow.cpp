@@ -30,7 +30,6 @@ void MainWindow::render()
 {
 	static bool isOpen = true;
 	if (!isOpen) std::quick_exit(0);
-	ImGui::ShowDemoWindow();
 	ImGui::Begin(u8"Anti Virus 1.0",&isOpen, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize); {
 		
 		if (ImGui::BeginMenuBar())

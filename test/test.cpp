@@ -97,40 +97,9 @@ public:
 	}
 };
 
-template <class,class...>
-class defer;
-
-template <class funx>
-class defer<funx> {
-public:
-	defer(funx f) : f(f) { }
-	~defer() { f(); }
-private:
-	funx* f;
-};
-
-template <class funx,class... rest>
-class defer<funx,rest...> : private defer<rest...> {
-public:
-	defer(funx f, rest... r) : f(f), { }
-	~defer() { f(); }
-private:
-	funx* f;
-	rest r;
-};
-
-
 
 int main()
 {
-	auto lam = []() {
-		std::cout << "GG" << std::endl;
-	};
-	int b = 0;
-	defer<void(int), int> m([](int a) {
-		std::cout << "GG" << std::endl;
-		}
-	, 1);
 	//vi<D> d;
 	//d.test();
 

@@ -9,7 +9,7 @@
 #include <libgo/libgo.h>
 #include "HttpWrapper.hpp"
 
-int main(int, char**)
+int mainGGffGGG(int, char**)
 {
 	SetConsoleOutputCP(CP_UTF8);
 	auto ptr = Application::getPtr();
