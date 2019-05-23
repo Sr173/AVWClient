@@ -49,11 +49,23 @@
     <Filter Include="Window\ImGui\ImGuiImpl">
       <UniqueIdentifier>{14eddd8d-bec2-4703-97db-a4ea46a21391}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ClamAv">
+      <UniqueIdentifier>{e210a4aa-ad75-4ff3-907b-2bbebd023bb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClamAv\ClamAvEngine">
+      <UniqueIdentifier>{8581585e-0f8a-40cb-be1e-b21a96f2bfdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\ConfigWindow">
+      <UniqueIdentifier>{2f5b4e80-5039-48fa-a7fe-85f29a215b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClamAv\Config">
+      <UniqueIdentifier>{f1d6d896-57a2-48af-b2d8-d09b82c9ccd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window\Config">
+      <UniqueIdentifier>{b2cc0dc4-0e05-4544-972e-1f5efb7f5b28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AVWClient.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="imgui.cpp">
       <Filter>Window\ImGui</Filter>
     </ClCompile>
@@ -114,8 +126,20 @@
     <ClCompile Include="test_clamav.cpp">
       <Filter>Common\test</Filter>
     </ClCompile>
-    <ClCompile Include="AVEngine.cpp">
+    <ClCompile Include="AVWClient.cpp">
       <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="AVScan.cpp">
+      <Filter>ClamAv</Filter>
+    </ClCompile>
+    <ClCompile Include="LocalEngine.cpp">
+      <Filter>ClamAv\ClamAvEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigWindow.cpp">
+      <Filter>Window\ConfigWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineEngine.cpp">
+      <Filter>ClamAv\ClamAvEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,8 +179,26 @@
     <ClInclude Include="HttpWrapper.hpp">
       <Filter>Network\Http</Filter>
     </ClInclude>
-    <ClInclude Include="AVEngine.h">
-      <Filter>Common\Application</Filter>
+    <ClInclude Include="AVScan.h">
+      <Filter>ClamAv</Filter>
+    </ClInclude>
+    <ClInclude Include="IAVEngine.hpp">
+      <Filter>ClamAv\ClamAvEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalEngine.h">
+      <Filter>ClamAv\ClamAvEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockQueue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigWindow.h">
+      <Filter>Window\ConfigWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineEngine.h">
+      <Filter>ClamAv\ClamAvEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.hpp">
+      <Filter>ClamAv\Config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

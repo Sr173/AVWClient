@@ -8,14 +8,16 @@
 #include "MainWindow.hpp"
 #include <libgo/libgo.h>
 #include "HttpWrapper.hpp"
+#include "ClamAv.h"
 
-int mainGGffGGG(int, char**)
+int main(int, char**)
 {
 	SetConsoleOutputCP(CP_UTF8);
 	auto ptr = Application::getPtr();
 	ImplWindow::getPtr()->text("Anti Virus 1.0");
 	ImplWindow::getPtr()->size(ImVec2(800, 600));
 	MainWindow::getPtr()->text("Anti Virus 1.0");
+	MainWindow::getPtr()->size({ 0,0 });
 	HttpWrapper::getPtr()->set_io_context(ptr->get_io_context());
 	auto reply = HttpWrapper::getPtr()->get("www.baidu.com", "80");
 	reply->Register<HttpReplyObservers::HttpReplyFinished>([](std::string s,boost::beast::error_code ec) {

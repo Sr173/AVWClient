@@ -29,7 +29,7 @@ void Application::exec()
 		Notify<ApplicationObservers::ApplicationEventLoopStart>();
 		ioc_.run_one();
 		for (auto i : all_window_) {
-			if (i->isShow()) {
+			if (i->is_show()) {
 				i->render();
 			}
 		}

@@ -11,5 +11,7 @@ public:
 	virtual void size(ImVec2 pos);
 	virtual void text(std::string txt);
 	virtual void render();
+private:
+	WindowBase* config_window_;
 };
 

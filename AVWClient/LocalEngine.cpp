@@ -2,25 +2,25 @@
 #include "ClamAv.h"
 
 
-LocalEngine::LocalEngine()
+AVEngine::AVEngine()
 {
 	engine = cl_engine_new();
 }
 
 
-LocalEngine::~LocalEngine()
+AVEngine::~AVEngine()
 {
 	cl_engine_free(engine);
 }
 
-int LocalEngine::add_virus_db(std::string path)
+int AVEngine::add_virus_db(std::string path)
 {
 	int old_num = virus_num_;
 	cl_load(path.c_str(), engine, &virus_num_, CL_DB_STDOPT);
 	return virus_num_ - old_num;
 }
 
-scan_result LocalEngine::scan_file(std::string path)
+scan_result AVEngine::scan_file(std::string path)
 {
 	scan_result sr;
 	sr.file_name = path;
@@ -29,7 +29,7 @@ scan_result LocalEngine::scan_file(std::string path)
 	opt.parse = CL_SCAN_PARSE_PE;
 
 	char name_buffer[100];
-	int re = cl_scanfile(path.c_str, (char**)(&name_buffer), &sr.scan_bytes, engine, &opt);
+	int re = cl_scanfile(path.c_str(), (const char**)(&name_buffer), &sr.scan_bytes, engine, &opt);
 	if (re == CL_CLEAN) sr.result = SS_Clean;
 	else if (re == CL_CLEAN) sr.result = SS_Virus;
 	else sr.result = SS_Error;
