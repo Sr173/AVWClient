@@ -2,25 +2,25 @@
 #include "ClamAv.h"
 
 
-AVEngine::AVEngine()
+LocalEngine::LocalEngine()
 {
 	engine = cl_engine_new();
 }
 
 
-AVEngine::~AVEngine()
+LocalEngine::~LocalEngine()
 {
 	cl_engine_free(engine);
 }
 
-int AVEngine::add_virus_db(std::string path)
+int LocalEngine::add_virus_db(std::string path)
 {
 	int old_num = virus_num_;
 	cl_load(path.c_str(), engine, &virus_num_, CL_DB_STDOPT);
 	return virus_num_ - old_num;
 }
 
-scan_result AVEngine::scan_file(std::string path)
+scan_result LocalEngine::scan_file(std::string path)
 {
 	scan_result sr;
 	sr.file_name = path;
