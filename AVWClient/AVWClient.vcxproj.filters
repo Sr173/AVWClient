@@ -61,8 +61,11 @@
     <Filter Include="ClamAv\Config">
       <UniqueIdentifier>{f1d6d896-57a2-48af-b2d8-d09b82c9ccd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Window\Config">
-      <UniqueIdentifier>{b2cc0dc4-0e05-4544-972e-1f5efb7f5b28}</UniqueIdentifier>
+    <Filter Include="Window\AVWindow">
+      <UniqueIdentifier>{18ede636-0cd9-404b-a69c-d3b7ffaec110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\AVProcessWindow">
+      <UniqueIdentifier>{954ab62b-4d67-4a0e-8c72-62cbd3c3e2d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,11 +138,17 @@
     <ClCompile Include="LocalEngine.cpp">
       <Filter>ClamAv\ClamAvEngine</Filter>
     </ClCompile>
+    <ClCompile Include="OnlineEngine.cpp">
+      <Filter>ClamAv\ClamAvEngine</Filter>
+    </ClCompile>
     <ClCompile Include="ConfigWindow.cpp">
       <Filter>Window\ConfigWindow</Filter>
     </ClCompile>
-    <ClCompile Include="OnlineEngine.cpp">
-      <Filter>ClamAv\ClamAvEngine</Filter>
+    <ClCompile Include="AVWindow.cpp">
+      <Filter>Window\AVWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="AVProcess.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,14 +200,26 @@
     <ClInclude Include="BlockQueue.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigWindow.h">
-      <Filter>Window\ConfigWindow</Filter>
-    </ClInclude>
     <ClInclude Include="OnlineEngine.h">
       <Filter>ClamAv\ClamAvEngine</Filter>
     </ClInclude>
     <ClInclude Include="Config.hpp">
       <Filter>ClamAv\Config</Filter>
     </ClInclude>
+    <ClInclude Include="ConfigWindow.h">
+      <Filter>Window\ConfigWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="AVWindow.h">
+      <Filter>Window\AVWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="AVProcess.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram.cd">
+      <Filter>Window</Filter>
+    </None>
   </ItemGroup>
 </Project>

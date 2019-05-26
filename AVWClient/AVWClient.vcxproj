@@ -163,6 +163,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AVProcess.cpp" />
+    <ClCompile Include="AVWindow.cpp" />
     <ClCompile Include="ConfigWindow.cpp" />
     <ClCompile Include="LocalEngine.cpp" />
     <ClCompile Include="AVScan.cpp" />
@@ -190,6 +192,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.hpp" />
+    <ClInclude Include="AVProcess.h" />
+    <ClInclude Include="AVWindow.h" />
     <ClInclude Include="BlockQueue.h" />
     <ClInclude Include="Config.hpp" />
     <ClInclude Include="ConfigWindow.h" />
@@ -208,6 +212,10 @@
     <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="Websocket.hpp" />
     <ClInclude Include="WindowsBase.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

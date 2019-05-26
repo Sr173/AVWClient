@@ -9,6 +9,7 @@
 #include <libgo/libgo.h>
 #include "HttpWrapper.hpp"
 #include "ClamAv.h"
+#include "Websocket.hpp"
 
 int main(int, char**)
 {
@@ -19,11 +20,23 @@ int main(int, char**)
 	MainWindow::getPtr()->text("Anti Virus 1.0");
 	MainWindow::getPtr()->size({ 0,0 });
 	HttpWrapper::getPtr()->set_io_context(ptr->get_io_context());
-	auto reply = HttpWrapper::getPtr()->get("www.baidu.com", "80");
-	reply->Register<HttpReplyObservers::HttpReplyFinished>([](std::string s,boost::beast::error_code ec) {
-		std::cout << s;
-		std::cout << ec;
-		});
+	auto ws = std::make_shared<Websocket>(*ptr->get_io_context());
+	ws->run("127.0.0.1", "80", "/ws");
+	ws->Register<WebsocketObservers::WebsocketOnMessage>(
+		[](std::string s) {
+			std::cout << s << std::endl;
+		}
+	);
+
+	auto post_reply = HttpWrapper::getPtr()->post("C:\\Users\\admin\\Personal\\pngpic\\62273861_p0-removebg.png", "127.0.0.1", "80");
+	if (post_reply)
+	{
+		//post_reply->Register<HttpReplyObservers::HttpReplyFinished>([](std::string s)
+		//{
+		//		std::cout << s << std::endl;
+		//});
+	}
+
 
 	go std::bind(&Application::exec, ptr);
 	go[]() {

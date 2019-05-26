@@ -15,6 +15,7 @@ public:
 	int thread_num = 1;
 	std::string db_uri;
 	RunnerModel runner_model;
-	std::string db_all_type;
+	std::vector <std::string> db_all_type;
 	std::vector<int> select_db_path;
+	std::string scan_path;
 };

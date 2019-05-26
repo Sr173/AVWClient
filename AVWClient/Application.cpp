@@ -27,7 +27,7 @@ void Application::exec()
 			continue;
 		}
 		Notify<ApplicationObservers::ApplicationEventLoopStart>();
-		ioc_.run_one();
+		ioc_.poll_one();
 		for (auto i : all_window_) {
 			if (i->is_show()) {
 				i->render();

@@ -51,9 +51,51 @@ HttpReply* HttpWrapper::get(std::string host, std::string port, std::string path
 	return reply;
 }
 
-HttpReply* HttpWrapper::post(std::string host, std::string port, std::string path)
+HttpReply* HttpWrapper::post(std::string file_path,std::string host, std::string port, std::string path)
 {
-	return nullptr;
+	auto reply = new HttpReply;
+	go[=]() {
+		try {		
+			tcp::resolver resolver(*ioc_);
+			beast::tcp_stream stream(*ioc_);
+			auto const results = resolver.resolve(host, port);
+			stream.connect(results);
+			http::request<http::file_body> req{ http::verb::post, path, 10 };
+			beast::error_code fec;
+			req.body().open(file_path.data(), beast::file_mode::read, fec);
+
+			//req.set(beast::http::field::content_type, "application/x-www-form-urlencoded");
+			req.set(http::field::host, host);
+			req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+			req.set(beast::http::field::content_length, req.body().size());
+			req.insert("file_name", file_path.data());
+			if (fec)
+			{
+				return reply;
+			}
+			//req.body().
+			//std::cout << req.body().size() << std::endl;
+			auto ress = http::write(stream, req);
+			beast::flat_buffer buffer;
+			http::response<http::dynamic_body> res;
+			http::read(stream, buffer, res);
+			beast::error_code ec;
+			stream.socket().shutdown(tcp::socket::shutdown_both, ec);
+			if (ec && ec != beast::errc::not_connected)
+				throw beast::system_error{ ec };
+			int size = buffer.data().size();
+			std::cout << res << std::endl;
+			reply->data_ = beast::buffers_to_string(res.body().data());
+			reply->ec_ = ec;
+			reply->finished();
+		}
+		catch (std::exception const& e)
+		{
+			std::cout << e.what() << std::endl;
+			return reply;
+		}
+	};
+	return reply;
 }
 
 void HttpWrapper::set_io_context(boost::asio::io_context* ioc)

@@ -15,6 +15,7 @@ struct scan_result
 	std::string file_name;
 	std::string virus_name;
 	unsigned long scan_bytes;
+	unsigned long time;
 };
 
 class IAVEngine
