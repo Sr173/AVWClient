@@ -150,6 +150,12 @@
     <ClCompile Include="AVProcess.cpp">
       <Filter>Window</Filter>
     </ClCompile>
+    <ClCompile Include="OnlineJudge.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Skin.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">
@@ -213,6 +219,12 @@
       <Filter>Window\AVWindow</Filter>
     </ClInclude>
     <ClInclude Include="AVProcess.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineJudge.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Skin.h">
       <Filter>Window</Filter>
     </ClInclude>
   </ItemGroup>

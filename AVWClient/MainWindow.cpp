@@ -4,6 +4,8 @@
 #include "Commdlg.h"
 #include "AVWindow.h"
 #include "AVProcess.h"
+#include "OnlineJudge.h"
+#include "skin.h"
 
 #pragma comment (lib,"Comdlg32.lib");
 
@@ -80,6 +82,8 @@ void MainWindow::render()
 	if (ImGui::Button(u8"开始杀毒"))
 	{
 		new AVProcess();
+		new OnlineJudge();
+		new Skin();
 	}
 	if(ImGui::Button(u8"加载扫描引擎"))
 	{
