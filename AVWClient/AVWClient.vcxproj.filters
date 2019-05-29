@@ -156,6 +156,12 @@
     <ClCompile Include="Skin.cpp">
       <Filter>Window</Filter>
     </ClCompile>
+    <ClCompile Include="Common.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="test_file_system.cpp">
+      <Filter>Common\test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IApplication.hpp">
@@ -226,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="Skin.h">
       <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

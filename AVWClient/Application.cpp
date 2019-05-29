@@ -33,6 +33,7 @@ void Application::exec()
 				i->render();
 			}
 		}
+		if (!windowQueue.empty()) delete windowQueue.pop();
 		Notify<ApplicationObservers::ApplicationEventLoopEnd>();
 	}
 	quit();
@@ -59,6 +60,12 @@ bool Application::addRenderWindow(WindowBase* window)
 bool Application::deleteRenderWindow(WindowBase* window)
 {
 	all_window_.remove(window);
+	return false;
+}
+
+bool Application::addDeleteWindow(WindowBase* window)
+{
+	windowQueue.push_back(window);
 	return false;
 }
 

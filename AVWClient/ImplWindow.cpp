@@ -153,7 +153,8 @@ void ImplWindow::endFrame()
 	g_pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, false);
 
 	D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(clear_color.x * 255.0f), (int)(clear_color.y * 255.0f), (int)(clear_color.z * 255.0f), (int)(0 * 255.0f));
-	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA(0xFF, 0xFF, 0xFF, 0xFF), 1.0f, 0);
+	auto color = Application::getPtr()->back_color;
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, color.operator ImU32(), 1.0f, 0);
 	if (g_pd3dDevice->BeginScene() >= 0)
 	{
 		ImGui::Render();

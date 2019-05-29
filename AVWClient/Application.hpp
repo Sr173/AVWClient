@@ -3,8 +3,9 @@
 #include "IApplication.hpp"
 #include "Singleton.hpp"
 #include "Observer.hpp"
+#include "BlockQueue.h"
+#include "WindowsBase.hpp"
 
-class WindowBase;
 namespace boost {
 	namespace asio{
 	class io_context;
@@ -33,9 +34,12 @@ public:
 	bool IsQuit() override;
 	bool addRenderWindow(WindowBase* window);
 	bool deleteRenderWindow(WindowBase* window);
+	bool addDeleteWindow(WindowBase* window);
 	boost::asio::io_context* get_io_context();
+	ImColor back_color;
 protected:
 	bool _isQuit = false;
 	std::list<WindowBase*> all_window_;
+	BlockQueue<WindowBase*> windowQueue;
 	boost::asio::io_context ioc_;
 };

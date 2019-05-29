@@ -9,4 +9,9 @@ WindowBase::WindowBase()
 WindowBase::~WindowBase()
 {
 	Application::getPtr()->deleteRenderWindow(this);
-};
+}
+void WindowBase::delete_later()
+{
+	Application::getPtr()->addDeleteWindow(this);
+}
+;

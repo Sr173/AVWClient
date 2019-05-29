@@ -13,11 +13,17 @@ LocalEngine::~LocalEngine()
 	cl_engine_free(engine);
 }
 
-int LocalEngine::add_virus_db(std::string path)
+int LocalEngine::add_virus_db(std::vector<std::string> paths)
 {
 	int old_num = virus_num_;
-	cl_load(path.c_str(), engine, &virus_num_, CL_DB_STDOPT);
-	return virus_num_ - old_num;
+	int old_db_num = db_num;
+	for (auto& str : paths) {
+		cl_load(str.c_str(), engine, &virus_num_, CL_DB_STDOPT);
+		if (virus_num_ - old_num > 0) {
+			db_num++;
+		}
+	}
+	return old_db_num - db_num;
 }
 
 scan_result LocalEngine::scan_file(std::string path)

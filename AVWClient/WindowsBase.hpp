@@ -16,9 +16,11 @@ public:
 	virtual void hidden() { is_show_ = false; }
 	virtual void visible(bool b) { is_show_ = b; }
 	virtual bool is_show() { return is_show_; }
+	virtual void delete_later();
 protected:
 	ImVec2 pos_ = { 0,0, };
 	ImVec2 size_ = { 0,0 };
 	std::string text_ = "";
 	bool is_show_ = true;
+	bool is_delete_;
 };

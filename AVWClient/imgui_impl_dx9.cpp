@@ -25,6 +25,7 @@
 #include <d3d9.h>
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
+#include "Application.hpp"
 
 // DirectX data
 static LPDIRECT3DDEVICE9        g_pd3dDevice = NULL;
@@ -190,6 +191,8 @@ void ImGui_ImplDX9_RenderDrawData(ImDrawData* draw_data)
         vtx_offset += cmd_list->VtxBuffer.Size;
     }
 
+	auto color = Application::getPtr()->back_color;
+	
     // Restore the DX9 transform
     g_pd3dDevice->SetTransform(D3DTS_WORLD, &last_world);
     g_pd3dDevice->SetTransform(D3DTS_VIEW, &last_view);

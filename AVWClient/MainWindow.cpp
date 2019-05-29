@@ -62,8 +62,12 @@ void MainWindow::render()
 			{
 				if (ImGui::MenuItem(u8"检查更新", "(C)")) {
 				}
+				if (ImGui::MenuItem(u8"换肤功能", "(A)")) {
+					new Skin();
+				}
 				if (ImGui::MenuItem(u8"关于我们", "(A)")) {
 				}
+
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenuBar();

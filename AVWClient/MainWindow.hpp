@@ -2,6 +2,8 @@
 #include "WindowsBase.hpp"
 #include "Singleton.hpp"
 
+class LocalEngine;
+
 class MainWindow : public WindowBase , public Singleton<MainWindow>
 {
 public:
@@ -13,5 +15,6 @@ public:
 	virtual void render();
 private:
 	WindowBase* config_window_;
+	LocalEngine* engine;
 };
 
