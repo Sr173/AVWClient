@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "WindowsBase.hpp"
+#include "Singleton.hpp"
 
-class AVProcess : public WindowBase
+class AVProcess : public WindowBase,public Singleton<AVProcess>
 {
 public:
 	virtual void pos(ImVec2 pos) {};

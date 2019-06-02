@@ -14,7 +14,6 @@ public:
 	virtual void text(std::string txt);
 	virtual void render();
 private:
-	WindowBase* config_window_;
 	LocalEngine* engine;
 };
 

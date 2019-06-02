@@ -19,5 +19,5 @@ public:
 	std::vector<int> select_db_path;
 	std::string scan_path;
 	int db_num;
-	const std::string app_path = "C:\\Users\\admin\\AppData\\Roaming\\cClamAV\\";
+	const std::string app_path = "C:\\Users\\admin\\AppData\\Roaming\\ClamAV\\";
 };

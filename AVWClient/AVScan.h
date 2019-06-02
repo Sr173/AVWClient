@@ -5,6 +5,9 @@
 #include "Observer.hpp"
 #include "BlockQueue.h"
 #include "Singleton.hpp"
+#include <memory>
+#include <deque>
+#include <mutex>
 
 class LocalEngine;
 
@@ -17,7 +20,7 @@ struct ScanObservers {
 
 struct thread_context {
 	std::string current_scan_file_name;
-	void* current_thread_system_id;
+	int current_thread_system_id;
 	int current_scan_file_count;
 };
 
@@ -26,12 +29,33 @@ class AVScan : public Observable<ScanObservers>,public Singleton<AVScan>
 {
 public:
 	void add_engine(IAVEngine* engine);
-	std::vector<scan_result> scan_file(std::string file);
 	scan_result scan_path(std::string path);
 	void set_maximum_number_of_threads(int number);
 	void create_scan_thread(thread_context* tc);
+	void start(LocalEngine* engine);
+	void abort();
+	bool is_begining();
+	auto get_clean() {
+		std::lock_guard<std::mutex> m(lock_vector_);
+		return clean_;
+	}
+	auto get_virtus() {
+		std::lock_guard<std::mutex> m(lock_vector_);
+		return virus_;
+	}
+	std::vector<std::shared_ptr<thread_context>> all_thread_context;
+	std::string current_scan_path;
+	int current_path_number_;
+	int scan_number_;
+	int all_count;
 private:
-	std::vector<IAVEngine*> engines;
-	std::vector<thread_context> all_thread_;
+	LocalEngine* engine;
+	bool is_begining_ = false;
+	void scan_thread(thread_context* tc);
+	BlockQueue<std::string> path_;
+	BlockQueue<std::string> scan_file_;
+	std::mutex lock_vector_;
+	std::vector<scan_result> virus_;
+	std::vector<scan_result> clean_;
 };
 

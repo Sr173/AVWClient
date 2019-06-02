@@ -6,14 +6,16 @@
 #include "AVProcess.h"
 #include "OnlineJudge.h"
 #include "skin.h"
+#include "LocalEngine.h"
+#include "Config.hpp"
+#include "AVScan.h"
 
-#pragma comment (lib,"Comdlg32.lib");
+#pragma comment (lib,"Comdlg32.lib")
 
 MainWindow::MainWindow()
 {
 	size_ = { 800,600 };
-	config_window_ = new ConfigWindow;
-	config_window_->visible(false); 
+	engine = new LocalEngine();
 }
 
 
@@ -48,10 +50,10 @@ void MainWindow::render()
 			if (ImGui::BeginMenu(u8"文件"))
 			{
 				if (ImGui::MenuItem(u8"配置文件", "(A)")) {
-					config_window_->visible(true);
+					ConfigWindow::getPtr()->visible(true);
 				}
 				if (ImGui::MenuItem(u8"加载本地数据库", "(A)")) {
-					config_window_->visible(true);
+					ConfigWindow::getPtr()->visible(true);
 				}
 				if (ImGui::MenuItem("1", "1")) {
 					MessageBox(0, 0, 0, 0);
@@ -83,13 +85,20 @@ void MainWindow::render()
 	ImGui::End();
 
 	ImGui::Begin(u8"控制台");
-	if (ImGui::Button(u8"开始杀毒"))
-	{
-		new AVProcess();
-		new OnlineJudge();
-		new Skin();
+	AVProcess::getPtr()->visible(AVScan::getPtr()->is_begining());
+	if (!AVScan::getPtr()->is_begining()) {
+		if (ImGui::Button(u8"开始杀毒"))
+		{
+			AVScan::getPtr()->start(engine);
+		}
 	}
-	if(ImGui::Button(u8"加载扫描引擎"))
+	else {
+		if (ImGui::Button(u8"结束杀毒"))
+		{
+			AVScan::getPtr()->abort();
+		}
+	}
+	if(ImGui::Button(u8"加载扫描数据库"))
 	{
 		OPENFILENAMEA dialog = {0};
 		OPENFILENAME ofn;
@@ -105,6 +114,7 @@ void MainWindow::render()
 		ofn.lpstrFileTitle = NULL;
 		ofn.nMaxFileTitle = 0;
 		ofn.lpstrInitialDir = NULL;
+		ofn.lpstrInitialDir = Config::getPtr()->app_path.c_str();
 		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 		ofn.lpstrTitle = "打开一个病毒引擎";
 
@@ -112,6 +122,13 @@ void MainWindow::render()
 		{
 
 		}
+		else {
+			engine->add_virus_db(szFile);
+		}
+		
+	}
+	if (ImGui::Button(u8"编译扫描引擎")) {
+		engine->compiled();
 	}
 	static bool is_open_config = false;
 	static bool is_open_result = false;
@@ -119,11 +136,11 @@ void MainWindow::render()
 	ImGui::Checkbox(u8"打开配置文件窗口", &is_open_config);
 	ImGui::Checkbox(u8"打开扫描结果窗口", &is_open_result);
 	AVWindow::getPtr()->visible(is_open_result);
-
+	ConfigWindow::getPtr()->visible(is_open_config);
 	ImGui::Text(u8"当前病毒库是否需要更新%s",u8"否"); //ImGui::SameLine(); ImGui::Button(u8"需要更新");
 	ImGui::Text(u8"云查杀服务状态:%s",u8"已经连接");
-	ImGui::Text(u8"加载的引擎数量:%d", 6);
-	ImGui::Text(u8"已知病毒数量:%d", 512412);
+	ImGui::Text(u8"加载的引擎数量:%d", engine->get_db_num());
+	ImGui::Text(u8"已知病毒数量:%d", engine->get_db_known_virus());
 
 	ImGui::End();
 	ImGui::ShowDemoWindow();

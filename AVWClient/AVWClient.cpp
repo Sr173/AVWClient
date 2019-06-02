@@ -14,6 +14,8 @@
 int main(int, char**)
 {
 	SetConsoleOutputCP(CP_UTF8);
+	cl_initialize_crypto();
+	cl_init(1);
 	auto ptr = Application::getPtr();
 	ImplWindow::getPtr()->text("Anti Virus 1.0");
 	ImplWindow::getPtr()->size(ImVec2(800, 600));

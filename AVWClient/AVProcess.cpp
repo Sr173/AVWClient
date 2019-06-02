@@ -3,6 +3,7 @@
 #include <time.h>
 #include <windows.h>
 #include <algorithm>
+#include "AVScan.h"
 
 #define max max
 
@@ -38,15 +39,26 @@ void AVProcess::render()
 	static float arr[] = {0.f, 0.1f, 1.0f, 0.5f, 0.92f, 0.1f, 0.2f };
 	ImGui::PlotLines(u8"每秒扫描文件数:68", arr, IM_ARRAYSIZE(arr));
 	ImGui::PlotLines(num_buffer, data.data(), data.size(), 0, "avg 0.0", -1, *std::max_element(data.begin(), data.end())+ 1, ImVec2(0, 80));
-	ImGui::Text(u8"线程1正在扫描文件:%s", u8"C:\\Windows\\driver\\splwow64.exe");
-	ImGui::Text(u8"线程2正在扫描文件:%s", u8"C:\\Windows\\driver\\regedit.exe");
-	ImGui::Text(u8"线程3正在扫描文件:%s", u8"C:\\Windows\\driver\\pyw.exe");
-	ImGui::Text(u8"线程4正在扫描文件:%s", u8"C:\\Windows\\driver\\py.exe");
 	ImGui::Separator();
-	ImGui::Text(u8"当前扫描文件夹:C:\\windows\\driver\\");
-	ImGui::ProgressBar(0.782, ImVec2(0.f, 0.f), u8"782/1000"); ImGui::SameLine(); ImGui::Text(u8"此文件夹扫描进度");
+	int tatil = 0;
+	for (auto i : AVScan::getPtr()->all_thread_context) {
+		static char buffer[400];
+		sprintf_s(buffer, u8"线程[%d]正在扫描文件", i->current_thread_system_id);
+		static std::string s;
+		s = buffer + i->current_scan_file_name;
+		tatil += i->current_scan_file_count;
+		ImGui::Text(s.c_str());
+	}
 	ImGui::Separator();
-	ImGui::Text(u8"共扫描文件%d个", 19920);
-	ImGui::Text(u8"发现病毒%d个", 0);
+	ImGui::Text(AVScan::getPtr()->current_scan_path.c_str());
+	static char buffer[100];
+	sprintf_s(buffer, "%d/%d", AVScan::getPtr()->current_path_number_ - AVScan::getPtr()->scan_number_ , AVScan::getPtr()->current_path_number_);
+	ImGui::ProgressBar(float(AVScan::getPtr()->current_path_number_ - AVScan::getPtr()->scan_number_)
+		/ float(AVScan::getPtr()->current_path_number_),
+		ImVec2(0.f, 0.f), buffer); ImGui::SameLine(); ImGui::Text(u8"此文件夹扫描进度");
+	ImGui::Separator();
+	
+	ImGui::Text(u8"共扫描文件%d个", tatil);
+	ImGui::Text(u8"发现病毒%d个", AVScan::getPtr()->get_virtus().size());
 	ImGui::End();
 }
